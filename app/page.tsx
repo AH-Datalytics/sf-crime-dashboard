@@ -1,65 +1,137 @@
-import Image from "next/image";
+"use client";
+import Link from "next/link";
+import { useCrimeData } from "@/lib/hooks/use-crime";
+import { useTrafficData } from "@/lib/hooks/use-traffic";
+import { useCfsData } from "@/lib/hooks/use-cfs";
+import { computeYTDComparison as crimeYTD } from "@/lib/measures/crime-measures";
+import { computeYTDComparison as trafficYTD } from "@/lib/measures/traffic-measures";
+import { computeYTDComparison as cfsYTD } from "@/lib/measures/cfs-measures";
 
-export default function Home() {
+function DomainCard({
+  href,
+  title,
+  description,
+  ytd,
+  prior,
+  pct,
+  unit,
+  isLoading,
+}: {
+  href: string;
+  title: string;
+  description: string;
+  ytd: number;
+  prior: number;
+  pct: number;
+  unit: string;
+  isLoading: boolean;
+}) {
+  const isNeutral = Math.abs(pct) < 2;
+  const isIncrease = pct >= 2;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <Link
+      href={href}
+      className="block border border-[#e8e8e8] rounded-lg bg-white p-5 hover:border-[#01396C] hover:shadow-sm transition-all group"
+    >
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="font-serif font-bold text-base text-foreground group-hover:text-[#01396C] transition-colors">{title}</p>
+          <p className="text-xs text-muted-foreground font-sans mt-0.5">{description}</p>
+        </div>
+        <span className="text-xs font-mono text-[#01396C]">View →</span>
+      </div>
+      {isLoading ? (
+        <div className="mt-4 h-10 bg-[#faf9f6] rounded animate-pulse" />
+      ) : (
+        <div className="mt-4 flex items-end gap-4">
+          <div>
+            <p className="text-[10px] font-mono uppercase tracking-wider text-gray-400">YTD {new Date().getFullYear()}</p>
+            <p className="text-2xl font-serif font-bold tabular-nums mt-0.5">{ytd.toLocaleString()}</p>
+            <p className="text-xs text-gray-400 font-mono">{unit}</p>
+          </div>
+          <div className="pb-1">
+            <p className={`text-sm font-medium font-mono ${isNeutral ? "text-gray-400" : isIncrease ? "text-red-600" : "text-blue-600"}`}>
+              {isNeutral ? "—" : isIncrease ? "▲" : "▼"} {Math.abs(pct).toFixed(1)}%
+            </p>
+            <p className="text-xs text-gray-400 font-mono">vs prior year</p>
+          </div>
+        </div>
+      )}
+    </Link>
+  );
+}
+
+export default function OverviewPage() {
+  const { filtered: crimeFiltered, isLoading: crimeLoading } = useCrimeData();
+  const { filtered: trafficFiltered, isLoading: trafficLoading } = useTrafficData();
+  const { filtered: cfsFiltered, isLoading: cfsLoading } = useCfsData();
+
+  const crime = crimeFiltered.length > 0 ? crimeYTD(crimeFiltered) : { ytdCurrent: 0, ytdPrior: 0, pctChange: 0 };
+  const traffic = trafficFiltered.length > 0 ? trafficYTD(trafficFiltered) : { ytdCurrent: 0, ytdPrior: 0, pctChange: 0 };
+  const cfs = cfsFiltered.length > 0 ? cfsYTD(cfsFiltered) : { ytdCurrent: 0, ytdPrior: 0, pctChange: 0 };
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <div>
+        <h1 className="font-serif text-2xl font-bold text-foreground">San Francisco Public Safety</h1>
+        <p className="text-sm text-muted-foreground font-sans mt-1">
+          Crime incidents, calls for service, and traffic collisions — powered by{" "}
+          <a href="https://data.sfgov.org" className="underline hover:text-foreground" target="_blank" rel="noopener noreferrer">
+            DataSF
+          </a>
+          . Data updated daily.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <DomainCard
+          href="/crime"
+          title="Crime"
+          description="All reported incidents from SFPD, 2022–present"
+          ytd={crime.ytdCurrent}
+          prior={crime.ytdPrior}
+          pct={crime.pctChange}
+          unit="incidents"
+          isLoading={crimeLoading}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        <DomainCard
+          href="/cfs"
+          title="Calls for Service"
+          description="SFPD dispatch calls and response times"
+          ytd={cfs.ytdCurrent}
+          prior={cfs.ytdPrior}
+          pct={cfs.pctChange}
+          unit="calls"
+          isLoading={cfsLoading}
+        />
+        <DomainCard
+          href="/traffic"
+          title="Traffic Collisions"
+          description="All reported collisions by severity and location"
+          ytd={traffic.ytdCurrent}
+          prior={traffic.ytdPrior}
+          pct={traffic.pctChange}
+          unit="collisions"
+          isLoading={trafficLoading}
+        />
+      </div>
+
+      <div className="border border-[#e8e8e8] rounded-lg bg-white p-5">
+        <Link href="/map" className="flex items-center justify-between group">
+          <div>
+            <p className="font-serif font-bold text-base group-hover:text-[#01396C] transition-colors">Incident Map</p>
+            <p className="text-sm text-muted-foreground font-sans mt-0.5">
+              Browse the last 90 days of crime incidents plotted on an interactive map of San Francisco.
+            </p>
+          </div>
+          <span className="text-xs font-mono text-[#01396C] whitespace-nowrap ml-4">Open map →</span>
+        </Link>
+      </div>
+
+      <div className="text-xs text-muted-foreground font-mono border-t border-[#e8e8e8] pt-4">
+        Source: San Francisco Police Department via DataSF open data portal. Counts reflect reported incidents and may differ from official press releases. Data subject to change.
+      </div>
     </div>
   );
 }

@@ -1,0 +1,28 @@
+name: Refresh Data
+
+on:
+  schedule:
+    - cron: "0 10 * * *"  # 2 AM PT = 10 AM UTC
+  workflow_dispatch:       # manual trigger
+
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Run ETL scripts
+        run: npx tsx scripts/refresh-data.ts
+
+      - name: Commit updated data
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Auto: refresh SF crime data"
+          add: "data/generated/"
