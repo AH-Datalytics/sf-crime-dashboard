@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { Libre_Baskerville, Roboto_Condensed, IBM_Plex_Mono } from "next/font/google";
+import { Source_Sans_3, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 
-const serif = Libre_Baskerville({
+const sans = Source_Sans_3({
   subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-serif",
-});
-
-const sans = Roboto_Condensed({
-  subsets: ["latin"],
-  weight: ["300", "400", "700"],
+  weight: ["400", "600", "700"],
   variable: "--font-sans",
 });
 
@@ -34,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${serif.variable} ${sans.variable} ${mono.variable} h-full antialiased`}
+      className={`${sans.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background">
         <Header />

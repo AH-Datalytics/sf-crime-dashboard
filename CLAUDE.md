@@ -49,8 +49,8 @@ app/{domain}/page.tsx                   → Page
 
 ## Design System
 
-Colors: primary `#01396C` (navy), background `#faf9f6`, increase `#c62828` (red ▲), decrease `#1565c0` (blue ▼)
-Fonts: Libre Baskerville (serif) / Roboto Condensed (sans) / IBM Plex Mono (mono)
+Colors: SFPD-branded — dark navy `#0a1433` (header), gold `#e8bb29` (accent), blue `#0e6dcb` (charts/links), red `#e2151a` (increase ▲), blue `#0e6dcb` (decrease ▼), background `#ffffff`
+Fonts: Source Sans 3 (Frutiger substitute, all text) / IBM Plex Mono (mono labels)
 
 ## Deployment
 

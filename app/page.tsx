@@ -32,17 +32,17 @@ function DomainCard({
   return (
     <Link
       href={href}
-      className="block border border-[#e8e8e8] rounded-lg bg-white p-5 hover:border-[#01396C] hover:shadow-sm transition-all group"
+      className="block border border-[#e8e8e8] rounded-lg bg-white p-5 hover:border-[#0e6dcb] hover:shadow-sm transition-all group"
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="font-serif font-bold text-base text-foreground group-hover:text-[#01396C] transition-colors">{title}</p>
+          <p className="font-serif font-bold text-base text-foreground group-hover:text-[#0e6dcb] transition-colors">{title}</p>
           <p className="text-xs text-muted-foreground font-sans mt-0.5">{description}</p>
         </div>
-        <span className="text-xs font-mono text-[#01396C]">View →</span>
+        <span className="text-xs font-mono text-[#0e6dcb]">View →</span>
       </div>
       {isLoading ? (
-        <div className="mt-4 h-10 bg-[#faf9f6] rounded animate-pulse" />
+        <div className="mt-4 h-10 bg-[#f5f5f5] rounded animate-pulse" />
       ) : (
         <div className="mt-4 flex items-end gap-4">
           <div>
@@ -120,12 +120,12 @@ export default function OverviewPage() {
       <div className="border border-[#e8e8e8] rounded-lg bg-white p-5">
         <Link href="/map" className="flex items-center justify-between group">
           <div>
-            <p className="font-serif font-bold text-base group-hover:text-[#01396C] transition-colors">Incident Map</p>
+            <p className="font-serif font-bold text-base group-hover:text-[#0e6dcb] transition-colors">Incident Map</p>
             <p className="text-sm text-muted-foreground font-sans mt-0.5">
               Browse the last 90 days of crime incidents plotted on an interactive map of San Francisco.
             </p>
           </div>
-          <span className="text-xs font-mono text-[#01396C] whitespace-nowrap ml-4">Open map →</span>
+          <span className="text-xs font-mono text-[#0e6dcb] whitespace-nowrap ml-4">Open map →</span>
         </Link>
       </div>
 

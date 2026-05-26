@@ -14,9 +14,9 @@ const NAV = [
 export function Header() {
   const pathname = usePathname();
   return (
-    <header className="sticky top-0 z-[1100] bg-[#01396C] text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 flex items-center gap-6 h-12">
-        <Link href="/" className="font-serif font-bold text-sm tracking-wide whitespace-nowrap">
+    <header className="sticky top-0 z-[1100] shadow-md" style={{ backgroundColor: "#0a1433" }}>
+      <div className="max-w-7xl mx-auto px-4 flex items-center gap-6 h-12 text-white">
+        <Link href="/" className="font-sans font-bold text-sm tracking-wide whitespace-nowrap" style={{ color: "#e8bb29" }}>
           SF Public Safety
         </Link>
         <nav className="flex items-center gap-1 overflow-x-auto">
@@ -36,6 +36,7 @@ export function Header() {
           ))}
         </nav>
       </div>
+      <div style={{ height: "3px", backgroundColor: "#e8bb29" }} />
     </header>
   );
 }

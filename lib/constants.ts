@@ -7,17 +7,20 @@ export const DATASETS = {
 } as const;
 
 export const COLORS = {
-  primary: "#01396C",
-  primaryLight: "#1565c0",
-  background: "#faf9f6",
+  primary: "#0e6dcb",
+  primaryLight: "#3da2eb",
+  gold: "#e8bb29",
+  navy: "#0a1433",
+  navyLight: "#1c2d55",
+  background: "#ffffff",
   surface: "#ffffff",
-  muted: "#f5f5f0",
+  muted: "#f5f5f5",
   border: "#e8e8e8",
   borderStrong: "#d4d4d4",
-  increase: "#c62828",
-  decrease: "#1565c0",
+  increase: "#e2151a",
+  decrease: "#0e6dcb",
   neutral: "#666666",
-  chart: ["#01396C", "#1565c0", "#c62828", "#65bc7b", "#7a5c00", "#9c27b0", "#ff6f00", "#0097a7"],
+  chart: ["#0e6dcb", "#e8bb29", "#e2151a", "#1c2d55", "#3da2eb", "#bb8732", "#2d3071", "#0a1433"],
 } as const;
 
 export const PART1_CATEGORIES = [

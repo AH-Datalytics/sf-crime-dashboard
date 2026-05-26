@@ -29,31 +29,42 @@
 }
 
 :root {
-  --background: #faf9f6;
+  --background: #ffffff;
   --foreground: #1a1a1a;
-  --primary: #01396C;
+  --primary: #0a1433;
   --primary-foreground: #ffffff;
   --surface: #ffffff;
   --card: #ffffff;
   --card-foreground: #1a1a1a;
-  --muted: #f5f5f0;
+  --muted: #f5f5f5;
   --muted-foreground: #666666;
   --border: #e8e8e8;
   --border-strong: #d4d4d4;
   --input: #e8e8e8;
-  --ring: #01396C;
-  --increase: #c62828;
-  --decrease: #1565c0;
+  --ring: #0e6dcb;
+  --increase: #e2151a;
+  --decrease: #0e6dcb;
   --radius: 0.5rem;
+
+  /* SFPD brand palette */
+  --sfpd-navy: #0a1433;
+  --sfpd-navy-light: #1c2d55;
+  --sfpd-gold: #e8bb29;
+  --sfpd-blue: #0e6dcb;
+  --sfpd-blue-light: #3da2eb;
+  --sfpd-red: #e2151a;
+
+  /* font alias — Frutiger fallback (Source Sans 3) used for all text */
+  --font-serif: var(--font-sans);
 
   /* shadcn compatibility */
   --popover: #ffffff;
   --popover-foreground: #1a1a1a;
-  --secondary: #f5f5f0;
+  --secondary: #f5f5f5;
   --secondary-foreground: #1a1a1a;
-  --accent: #f5f5f0;
-  --accent-foreground: #1a1a1a;
-  --destructive: #c62828;
+  --accent: #e8bb29;
+  --accent-foreground: #0a1433;
+  --destructive: #e2151a;
 }
 
 @layer base {

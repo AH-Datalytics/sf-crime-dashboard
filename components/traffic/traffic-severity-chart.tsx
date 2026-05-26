@@ -5,10 +5,10 @@ import { useTrafficData } from "@/lib/hooks/use-traffic";
 import { aggregateBySeverity } from "@/lib/measures/traffic-measures";
 
 const SEVERITY_COLORS: Record<string, string> = {
-  "Fatal": "#c62828",
-  "Injury (Severe)": "#e57373",
-  "Injury (Other Visible)": "#f6a219",
-  "Injury (Complaint of Pain)": "#81b4e0",
+  "Fatal": "#e2151a",
+  "Injury (Severe)": "#e8bb29",
+  "Injury (Other Visible)": "#0e6dcb",
+  "Injury (Complaint of Pain)": "#3da2eb",
 };
 
 export function TrafficSeverityChart() {
@@ -28,7 +28,7 @@ export function TrafficSeverityChart() {
           <Tooltip formatter={(v) => [(v ?? 0).toLocaleString(), "Collisions"]} contentStyle={{ fontSize: 12, border: "1px solid #d4d4d4", boxShadow: "none" }} />
           <Bar dataKey="count" radius={[3, 3, 0, 0]}>
             {data.map((entry) => (
-              <Cell key={entry.severity} fill={SEVERITY_COLORS[entry.severity] ?? "#01396C"} />
+              <Cell key={entry.severity} fill={SEVERITY_COLORS[entry.severity] ?? "#0e6dcb"} />
             ))}
           </Bar>
         </BarChart>
